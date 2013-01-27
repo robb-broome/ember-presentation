@@ -1,0 +1,144 @@
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <pre><code>
+EP.ComponentView = Ember.View.extend
+  controllerClass: null
+
+  controller: Ember.computed -&gt;
+    return @_controller if @_controller
+
+    @_controller = @controllerClass.create()
+
+  context: Ember.computed -&gt;
+    @get(&apos;controller&apos;)
+  </code></pre>
+</section>
+
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <pre><code>
+EP.QuoteValueController = Ember.Controller.extend
+  direction: null
+  value: null
+
+  valueObserver: (-&gt;
+    previous = @_currentValue
+    @_currentValue = @get(&apos;value&apos;)
+
+    direction =
+      if previous &amp;&amp; @_currentValue
+        if previous == @_currentValue
+          &apos;same&apos;
+        else
+          if @_currentValue &gt; previous
+            &apos;up&apos;
+          else
+            &apos;down&apos;
+      else
+        null
+    @set(&apos;direction&apos;, direction)
+  ).observes(&apos;value&apos;)
+  </code></pre>
+</section>
+
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <pre><code>
+EP.QuoteValueView = EP.ComponentView.extend
+  tagName: &apos;span&apos;
+  classNameBindings: [&apos;direction&apos;] 
+  controllerClass: EP.QuoteValueController
+
+  directionBinding: &apos;controller.direction&apos;
+  value: ((key, value) -&gt;
+    if arguments.length == 1
+      @get(&apos;controller.value&apos;)
+    else
+      @set(&apos;controller.value&apos;, value)
+  ).property()
+
+  template: Ember.Handlebars.compile &quot;&#123;{value}}&quot;
+  </code></pre>
+</section>
+
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <pre><code>
+&lt;ul&gt;
+&#123;{#each EP.watchlist.quotes}}
+  &lt;li&gt;&#123;{symbol}}: &#123;{view EP.QuoteValueView valueBinding=&quot;lastRounded&quot;}}&lt;/li&gt;
+&#123;{/each}}
+&lt;/ul&gt;
+  </code></pre>
+</section>
+
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <p>
+    <ul>
+    {{#each EP.watchlist.quotes}}
+      <li>{{symbol}}: {{view EP.QuoteValueView valueBinding="lastRounded"}}</li>
+    {{/each}}
+    </ul>
+  </p>
+  <p>
+    <button class='btn btn-large' {{action indexUpdateQuotes}}>Update Quotes</button>
+  </p>
+</section>
+
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <h4>Lite</h4>
+  <pre><code>
+EP.QuoteValueLiteView = Ember.View.extend
+  tagName: &apos;span&apos;
+  classNameBindings: [&apos;direction&apos;] 
+
+  direction: null
+  value: ((key, value)-&gt;
+    if arguments.length == 1
+      @_currentValue
+    else
+      previous = @_currentValue
+      @_currentValue = value
+
+      direction =
+        if previous &amp;&amp; @_currentValue
+          if previous == @_currentValue
+            &apos;same&apos;
+          else
+            if @_currentValue &gt; previous
+              &apos;up&apos;
+            else
+              &apos;down&apos;
+        else
+          null
+      @set(&apos;direction&apos;, direction)
+      value
+  ).property()
+
+  template: Ember.Handlebars.compile &quot;&#123;{view.value}}&quot;
+  </code></pre>
+</section>
+
+<section>
+  <h2>Components</h2>
+  <h3>Multiple Independent MVCs</h3>
+  <h4>Lite</h4>
+  <p>
+    <ul>
+    {{#each EP.watchlist.quotes}}
+      <li>{{symbol}}: {{view EP.QuoteValueLiteView valueBinding="lastRounded"}}</li>
+    {{/each}}
+    </ul>
+  </p>
+  <p>
+    <button class='btn btn-large' {{action indexUpdateQuotes}}>Update Quotes</button>
+  </p>
+</section>

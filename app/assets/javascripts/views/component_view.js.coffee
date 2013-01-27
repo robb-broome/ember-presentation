@@ -1,4 +1,4 @@
-EmberPresentation.ComponentView = Ember.View.extend
+EP.ComponentView = Ember.View.extend
   controllerClass: null
 
   controller: Ember.computed ->

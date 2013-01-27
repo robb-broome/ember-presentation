@@ -19,3 +19,15 @@
 .reveal code {
   max-height: 800px;
 }
+
+span {
+  &.same {
+    color: #CCC;
+  }
+  &.up {
+    color: #0F0;
+  }
+  &.down {
+    color: #F00;
+  }
+}

@@ -15,7 +15,8 @@ _.each([
   'SimpleBinding',
   'CascadeBinding',
   'Observers',
-  'ComputedProperties'
+  'ComputedProperties',
+  'Components'
 ], (name) ->
   EP[name + 'SlideView'] = EP.SlideView.create
     elementId: name.dasherize() # so reveal doesn't show ember#### 
