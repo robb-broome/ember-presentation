@@ -1,0 +1,24 @@
+<h2>Bindings</h2>
+<h3>Simple Example</h3>
+<p>
+  Easily connect object updates to HTML
+  <pre><code class='coffeescript'>
+EP.CounterController = Ember.Controller.extend
+  counter: 0
+  incrementCounter: -&gt;
+    @incrementProperty &quot;counter&quot;
+  decrementCounter: -&gt;
+    @decrementProperty &quot;counter&quot;
+
+EP.CounterView = EP.ComponentView.extend
+  controllerClass: EP.CounterController
+  template: Ember.Handlebars.compile &quot;&quot;&quot;
+&lt;button &#123;{action incrementCounter}}&gt;Plus&lt;/button&gt;
+&lt;button &#123;{action decrementCounter}}&gt;Minus&lt;/button&gt;
+Counter: &#123;{counter}}
+&quot;&quot;&quot;
+  </code></pre>
+</p>
+<p>
+{{view EP.CounterView}}
+</p>
