@@ -8,6 +8,7 @@ EmberPresentation.WatchlistView = EP.ComponentView.extend
           <li>{{symbol}} &mdash; {{last}}</li>
         {{/each}}
       </ul>
+      <br/>
       <button class="btn" {{action "updateQuotes"}}>Update Quotes</button>
     {{else}}
       <p>Retrieve the watchlist!</p>
