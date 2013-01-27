@@ -5,7 +5,7 @@ EmberPresentation.WatchlistView = EP.ComponentView.extend
       <h4>{{watchlist.name}}</h4>
       <ul>
         {{#each watchlist.quotes}}
-          <li>{{symbol}} &mdash; {{ask}}/{{bid}}</li>
+          <li>{{symbol}} &mdash; {{last}}</li>
         {{/each}}
       </ul>
       <button class="btn" {{action "updateQuotes"}}>Update Quotes</button>

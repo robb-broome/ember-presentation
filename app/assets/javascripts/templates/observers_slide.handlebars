@@ -1,6 +1,48 @@
 <section>
   <h2>Observers</h2>
-  <h3>Clean up those numbers</h3>
+  <h3>Round those numbers</h3>
   <pre><code>
+EP.Quote.reopen
+  observerCount: 0
+  lastRounded: null
+
+  lastObserver: (-&gt;
+    @incrementProperty &apos;observerCount&apos;
+    @set &apos;lastRounded&apos;, Math.round(@ask)
+  ).observes(&apos;last&apos;)
   </pre></code>
+</section>
+<section>
+  <h2>Observers</h2>
+  <h3>Round those numbers</h3>
+  <pre><code>
+EP.ObserverController = Ember.ObjectController.extend
+  contentBinding: &quot;EP.watchlist.quotes.firstObject&quot;
+
+  updateQuote: -&gt;
+    WatchlistService.retrieve()
+    @get(&apos;content&apos;).update()
+  </pre></code>
+</section>
+<section>
+  <h2>Observers</h2>
+  <h3>Round those numbers</h3>
+  <pre><code>
+EP.ObserverView = EP.ComponentView.extend
+  controllerClass: EP.ObserverController
+  template: Ember.Handlebars.compile &quot;&quot;&quot;
+&lt;dl&gt;
+  &lt;dt&gt;Symbol&lt;/dt&gt;
+  &lt;dd&gt;&#123;{symbol}}&lt;/dd&gt;
+  &lt;dt&gt;Last&lt;/dt&gt;
+  &lt;dd&gt;&#123;{lastRounded}} &amp;mdash; &#123;{observerCount}}&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;button &#123;{action &quot;updateQuote&quot;}}&gt;Update Quote&lt;/button&gt;
+&quot;&quot;&quot;
+  </pre></code>
+</section>
+<section>
+  <h2>Observers</h2>
+  <h3>Round those numbers</h3>
+  {{view EP.ObserverView}}
 </section>

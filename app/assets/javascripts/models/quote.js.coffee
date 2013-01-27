@@ -1,9 +1,6 @@
 EmberPresentation.Quote = Ember.Object.extend
   symbol: null
-  ask: null
-  bid: null
-  askRounded: null
-  bidRounded: null
+  last: null
 
   init: ->
     @_super()
@@ -11,6 +8,13 @@ EmberPresentation.Quote = Ember.Object.extend
 
   update: ->
     @setProperties
-      ask: Math.random() * 100
-      bid: Math.random() * 100
+      last: Math.random() * 100
 
+EP.Quote.reopen
+  observerCount: 0
+  lastRounded: null
+
+  lastObserver: (->
+    @incrementProperty 'observerCount'
+    @set 'lastRounded', Math.round(@last)
+  ).observes('last')
