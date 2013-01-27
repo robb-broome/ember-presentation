@@ -1,0 +1,61 @@
+<section>
+  <h2>Computed Properties</h2>
+  <h3>Do some math</h3>
+  <pre><code>
+EP.Quote.reopen
+  openChangeCount: 0
+  open: Ember.computed -&gt;
+    @incrementProperty &apos;openChangeCount&apos;
+    Math.round(Math.random() * 1000)
+
+  uncached: Ember.computed -&gt;
+    Math.round(Math.random() * 1000)
+  .volatile()
+
+  averageChangeCount: 0
+  _total: 0
+  average: Ember.computed -&gt;
+    @_total += @last
+    @incrementProperty &apos;averageChangeCount&apos;
+    Math.round(@_total/@averageChangeCount)
+  .property(&apos;last&apos;)
+  </code></pre>
+</section>
+<section>
+  <h2>Computed Properties</h2>
+  <h3>Do some math</h3>
+  <pre><code>
+EP.ComputedPropertyController = EP.ObserverController.extend
+  contentBinding: &quot;EP.watchlist.quotes.lastObject&quot;
+
+EP.ComputedPropertyView = EP.ComponentView.extend
+  controllerClass: EP.ComputedPropertyController
+  template: Ember.Handlebars.compile &quot;&quot;&quot;
+&lt;dl&gt;
+  &lt;dt&gt;Symbol&lt;/dt&gt;
+  &lt;dd&gt;&#123;{symbol}}&lt;/dd&gt;
+  &lt;dt&gt;Open&lt;/dt&gt;
+  &lt;dd&gt;&#123;{open}} &amp;mdash; &#123;{openChangeCount}}&lt;/dd&gt;
+  &lt;dt&gt;Uncached&lt;/dt&gt;
+  &lt;dd&gt;&#123;{uncached}}&lt;/dd&gt;
+  &lt;dt&gt;Average&lt;/dt&gt;
+  &lt;dd&gt;&#123;{average}} &amp;mdash; &#123;{averageChangeCount}}&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;button class=&apos;btn btn-large&apos; &#123;{action &quot;updateQuote&quot;}}&gt;Update Quote&lt;/button&gt;
+&quot;&quot;&quot;
+  </code></pre>
+</section>
+<section>
+  <h2>Computed Properties</h2>
+  <h3>Do some math</h3>
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        {{view EP.ComputedPropertyView}}
+      </div>
+      <div class="span6">
+        {{view EP.ComputedPropertyView}}
+      </div>
+    </div>
+  </div>
+</section>

@@ -10,7 +10,7 @@ EP.Quote.reopen
     @incrementProperty &apos;observerCount&apos;
     @set &apos;lastRounded&apos;, Math.round(@ask)
   ).observes(&apos;last&apos;)
-  </pre></code>
+  </code></pre>
 </section>
 <section>
   <h2>Observers</h2>
@@ -22,7 +22,7 @@ EP.ObserverController = Ember.ObjectController.extend
   updateQuote: -&gt;
     WatchlistService.retrieve()
     @get(&apos;content&apos;).update()
-  </pre></code>
+  </code></pre>
 </section>
 <section>
   <h2>Observers</h2>
@@ -39,7 +39,7 @@ EP.ObserverView = EP.ComponentView.extend
 &lt;/dl&gt;
 &lt;button &#123;{action &quot;updateQuote&quot;}}&gt;Update Quote&lt;/button&gt;
 &quot;&quot;&quot;
-  </pre></code>
+  </code></pre>
 </section>
 <section>
   <h2>Observers</h2>
