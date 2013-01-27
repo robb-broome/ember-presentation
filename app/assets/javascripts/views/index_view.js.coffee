@@ -1,4 +1,5 @@
 EmberPresentation.IndexView = Ember.View.extend
+  classNames: 'slides'
   didInsertElement: ->
     Reveal.initialize
       controls: true

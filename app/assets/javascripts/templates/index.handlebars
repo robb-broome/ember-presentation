@@ -1,4 +1,3 @@
-<div class="reveal"><div class="slides">
 <section>
   <h1>Ember JS</h1>
   <h3>From a QF Perspective</h3>
@@ -9,8 +8,10 @@
   <h3>We'll go over</h3>
   <ul>
     <li>Bindings</li>
+    <li>Observers and Computed Properties</li>
     <li>Components</li>
     <li>Composing Components</li>
+    <li>Gotchas</li>
   </ul>
 </section>
 
@@ -86,6 +87,39 @@ EmberPresentation.WatchlistView = EP.ComponentView.extend
     <h2>Bindings</h2>
     <h3>Cascading Example</h3>
     <pre><code>
+window.QuoteService = (-&gt;
+  cache = &#123;}
+
+  findOrCreate = (symbol) -&gt;
+    quote = cache[symbol]
+    return quote if quote?
+
+    quote = EP.Quote.create
+      symbol: symbol
+    cache[symbol] = quote
+    quote
+
+  &#123;
+    get: -&gt;
+      if arguments.length == 1
+        findOrCreate(arguments[0])
+      else
+        quotes = []
+        for symbol in arguments
+          quotes.push(findOrCreate(symbol))
+        quotes
+
+    update: -&gt;
+      _.each cache, (quote, symbol) -&gt;
+        quote.update()
+  }
+)()
+    </pre></code>
+  </section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Cascading Example</h3>
+    <pre><code>
 window.WatchlistService =
   retrieve: -&gt;
     return if EP.watchlist?
@@ -95,6 +129,29 @@ window.WatchlistService =
       quotes: Ember.A(QuoteService.get(&apos;INTL&apos;, &apos;AAPL&apos;, &apos;MSFT&apos;, &apos;IBM&apos;))
 
     EP.set &apos;watchlist&apos;, wl
+
+EmberPresentation.Watchlist = Ember.Object.extend 
+  name: null
+  quotes: null
+    </pre></code>
+  </section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Cascading Example</h3>
+    <pre><code>
+EmberPresentation.Quote = Ember.Object.extend
+  symbol: null
+  ask: null
+  bid: null
+
+  init: -&gt;
+    @_super()
+    @update()
+
+  update: -&gt;
+    @setProperties
+      ask: Math.random() * 100
+      bid: Math.random() * 100
     </pre></code>
   </section>
   <section>
@@ -102,5 +159,18 @@ window.WatchlistService =
     <h3>Cascading Example</h3>
     {{view EP.WatchlistView}}
   </section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Remeber</h3>
+    <ol>
+      <li>To use @set or @setProperties</li>
+      <li>Prefer to use implicit field bindings over explicit setting</li>
+      <li>Use singleton instances for automatic view updates</li>
+    </ol>
+  </section>
+  <section>
+    <h2>Components</h2>
+    <h3>Cascading Example</h3>
+    {{view EP.WatchlistView}}
+  </section>
 </section>
-</div></div>

@@ -1,1 +1,2 @@
-EmberPresentation.ApplicationView = Ember.View.extend()
+EmberPresentation.ApplicationView = Ember.View.extend
+  classNames: 'reveal' 
