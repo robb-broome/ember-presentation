@@ -9,3 +9,15 @@
 #= require ./router
 #= require_tree ./routes
 #= require_self
+
+# Create SlideViews programmatically
+_.each([
+  'SimpleBinding',
+  'CascadeBinding',
+  'Observers',
+  'ComputedProperties'
+], (name) ->
+  EP[name + 'SlideView'] = EP.SlideView.create
+    elementId: name.dasherize() # so reveal doesn't show ember#### 
+    templateName: name.underscore() + '_slide' # by convention
+)
