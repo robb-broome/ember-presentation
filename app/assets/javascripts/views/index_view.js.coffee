@@ -8,5 +8,8 @@ EmberPresentation.IndexView = Ember.View.extend
       center: true
       transition: 'default'
     @$('pre code').each((i, e) ->
+      $e = $(e)
+      unless $e.attr('class')
+        $e.addClass('coffeescript')
       hljs.highlightBlock(e, null, false)
     )
