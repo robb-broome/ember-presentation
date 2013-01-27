@@ -47,7 +47,7 @@ EP.QuoteValueController = Ember.Controller.extend
   <h2>Components</h2>
   <h3>Multiple Independent MVCs</h3>
   <pre><code>
-EP.QuoteValueView = EP.ComponentView.extend
+EP.QVV = EP.QuoteValueView = EP.ComponentView.extend
   tagName: &apos;span&apos;
   classNameBindings: [&apos;direction&apos;] 
   controllerClass: EP.QuoteValueController
@@ -70,7 +70,7 @@ EP.QuoteValueView = EP.ComponentView.extend
   <pre><code>
 &lt;ul&gt;
 &#123;{#each EP.watchlist.quotes}}
-  &lt;li&gt;&#123;{symbol}}: &#123;{view EP.QuoteValueView valueBinding=&quot;lastRounded&quot;}}&lt;/li&gt;
+  &lt;li&gt;&#123;{symbol}}: &#123;{view EP.QVV valueBinding=&quot;lastRounded&quot;}}&lt;/li&gt;
 &#123;{/each}}
 &lt;/ul&gt;
   </code></pre>

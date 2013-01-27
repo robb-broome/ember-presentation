@@ -1,0 +1,62 @@
+<section>
+  <h2>Gotchas</h2>
+  <h3>Setting an object initial state via extend</h3>
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        <h4>Bad Side Effects</h4>
+        <pre><code>
+EP.Watchlist = Ember.Object.extend
+  name: null
+  quotes: []
+        </code></pre>
+      </div>
+      <div class="span6">
+        <h4>Correct</h4>
+        <pre><code>
+EP.Watchlist = Ember.Object.extend
+  name: null
+  quotes: null
+
+  init: -&gt;
+    @_super()
+    @set 'quotes', 
+      Ember.ArrayProxy.create()
+        </code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Gotchas</h2>
+  <h3>Call the @_super()</h3>
+  <p>
+    Especially if you override 'init'
+  </p>
+</section>
+<section>
+  <h2>Gotchas</h2>
+  <h3>Wrap native arrays with Ember.ArrayProxy</h3>
+  <p>
+    Unless you don't care about changes to the array.
+  </p>
+</section>
+<section>
+  <h2>Gotchas</h2>
+  <h3>Testing</h3>
+  <p>Wrap Ember updates in Ember.run calls</p>
+  <pre><code>
+it &apos;should update view&apos;, -&gt;
+  view = EP.QVV.create
+    value: 10
+  Ember.run -&gt;
+    view.append()
+
+  expect(view.$().text()).toEqual &apos;10&apos;
+
+  Ember.run -&gt;
+    view.set &apos;value&apos;, 20
+
+  expect(view.$().text()).toEqual &apos;20&apos;
+  </code></pre>
+</section>

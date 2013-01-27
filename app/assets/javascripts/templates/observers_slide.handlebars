@@ -20,8 +20,11 @@ EP.ObserverController = Ember.ObjectController.extend
   contentBinding: &quot;EP.watchlist.quotes.firstObject&quot;
 
   updateQuote: -&gt;
-    WatchlistService.retrieve()
-    @get(&apos;content&apos;).update()
+    quote = @get(&apos;content&apos;)
+    if quote
+      quote.update()
+    else
+      WatchlistService.retrieve()
   </code></pre>
 </section>
 <section>

@@ -1,4 +1,4 @@
-EP.QuoteValueView = EP.ComponentView.extend
+EP.QVV = EP.QuoteValueView = EP.ComponentView.extend
   tagName: 'span'
   classNameBindings: ['direction'] 
   controllerClass: EP.QuoteValueController
