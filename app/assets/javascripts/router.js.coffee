@@ -1,0 +1,2 @@
+EmberPresentation.Router.map ->
+  null

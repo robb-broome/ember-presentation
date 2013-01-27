@@ -1,0 +1,105 @@
+<div class="reveal"><div class="slides">
+<section>
+  <h1>Ember JS</h1>
+  <h3>From a QF Perspective</h3>
+</section>
+
+<section>
+  <h2>We'll go over</h2>
+  <ul>
+    <li>Bindings</li>
+    <li>MVC</li>
+    <li>Components</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Bindings</h2>
+  <h3>Simple Example</h3>
+  <p>
+  Easily connect object updates to HTML
+    <pre><code class='coffeescript'>
+EP.CounterController = Ember.Controller.extend
+  counter: 0
+  incrementCounter: -&gt;
+    @incrementProperty &quot;counter&quot;
+  decrementCounter: -&gt;
+    @decrementProperty &quot;counter&quot;
+
+EP.CounterView = EP.ComponentView.extend
+  controllerClass: EP.CounterController
+  template: Ember.Handlebars.compile &quot;&quot;&quot;
+&lt;button &#123;{action incrementCounter}}&gt;Plus&lt;/button&gt;
+&lt;button &#123;{action decrementCounter}}&gt;Minus&lt;/button&gt;
+Counter: &#123;{counter}}
+&quot;&quot;&quot;
+    </code></pre>
+  </p>
+  <p>
+  {{view EP.CounterView}}
+  </p>
+</section>
+
+<section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Cascading Example</h3>
+    <pre><code>
+window.EP = window.EmberPresentation = Ember.Application.create
+  watchlist: null
+
+EmberPresentation.WatchlistController = Ember.Controller.extend
+  watchlist: null
+  watchlistBinding: &quot;EP.watchlist&quot;
+
+  retrieve: -&gt;
+    WatchlistService.retrieve()
+
+  updateQuotes: -&gt;
+    QuoteService.updateQuotes()
+    </pre></code>
+  </section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Cascading Example</h3>
+    <pre><code>
+EmberPresentation.WatchlistView = EP.ComponentView.extend
+  controllerClass: EP.WatchlistController
+  template: Ember.Handlebars.compile &quot;&quot;&quot;
+    &#123;{#if watchlist}}
+      &lt;h4&gt;&#123;{watchlist.name}}&lt;/h4&gt;
+      &lt;ul&gt;
+        &#123;{#each watchlist.quotes}}
+          &lt;li&gt;&#123;{symbol}} &amp;mdash; {{ask}}/{{bid}}&lt;/li&gt;
+        &#123;{/each}}
+      &lt;/ul&gt;
+      &lt;button class=&quot;btn&quot; &#123;{action &quot;updateQuotes&quot;}}&gt;Update Quotes&lt;/button&gt;
+    &#123;{else}}
+      &lt;p&gt;Retrieve the watchlist!&lt;/p&gt;
+      &lt;button class=&quot;btn&quot; &#123;{action &quot;retrieve&quot;}}&gt;Retrieve&lt;/button&gt;
+    &#123;{/if}}
+  &quot;&quot;&quot;
+    </pre></code>
+  </section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Cascading Example</h3>
+    <pre><code>
+window.WatchlistService =
+  retrieve: -&gt;
+    return if EP.watchlist?
+
+    wl = EP.Watchlist.create
+      name: &apos;My Favorite Stocks&apos;
+      quotes: Ember.A(QuoteService.get(&apos;INTL&apos;, &apos;AAPL&apos;, &apos;MSFT&apos;, &apos;IBM&apos;))
+
+    EP.set &apos;watchlist&apos;, wl
+    </pre></code>
+  </section>
+  <section>
+    <h2>Bindings</h2>
+    <h3>Cascading Example</h3>
+    {{view EP.WatchlistView}}
+  </section>
+</section>
+</div></div>
