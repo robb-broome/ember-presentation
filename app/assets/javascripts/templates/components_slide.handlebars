@@ -6,9 +6,7 @@ EP.ComponentView = Ember.View.extend
   controllerClass: null
 
   controller: Ember.computed -&gt;
-    return @_controller if @_controller
-
-    @_controller = @controllerClass.create()
+    @controllerClass.create()
 
   context: Ember.computed -&gt;
     @get(&apos;controller&apos;)
@@ -49,7 +47,7 @@ EP.QuoteValueController = Ember.Controller.extend
   <pre><code>
 EP.QVV = EP.QuoteValueView = EP.ComponentView.extend
   tagName: &apos;span&apos;
-  classNameBindings: [&apos;direction&apos;] 
+  classNameBindings: [&apos;direction&apos;]
   controllerClass: EP.QuoteValueController
 
   directionBinding: &apos;controller.direction&apos;
@@ -98,7 +96,7 @@ EP.QVV = EP.QuoteValueView = EP.ComponentView.extend
   <pre><code>
 EP.QuoteValueLiteView = Ember.View.extend
   tagName: &apos;span&apos;
-  classNameBindings: [&apos;direction&apos;] 
+  classNameBindings: [&apos;direction&apos;]
 
   direction: null
   value: ((key, value)-&gt;
