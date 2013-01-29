@@ -4,23 +4,21 @@
   <pre><code>
 EP.QuoteTileView = Ember.View.extend
   tagName: &apos;table&apos;
-  classNames: [&apos;quote-tile&apos;] 
+  classNames: [&apos;quote-tile&apos;]
   quote: null
 
   template: Ember.Handlebars.compile &quot;&quot;&quot;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Sym&lt;/th&gt;&lt;td&gt;&#123;{view.quote.symbol}}&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Last&lt;/th&gt;
-      &lt;td&gt;&#123;{view EP.QVV valueBinding=&quot;view.quote.lastRounded&quot;}}&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Avg&lt;/th&gt;
-      &lt;td&gt;&#123;{view EP.QVV valueBinding=&quot;view.quote.average&quot;}}&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Sym&lt;/th&gt;&lt;td&gt;&#123;{view.quote.symbol}}&lt;/td&gt;
+  &lt;/tr&gt;&lt;tr&gt;
+    &lt;th&gt;Last&lt;/th&gt;
+    &lt;td&gt;&#123;{view EP.QVV valueBinding=&quot;view.quote.lastRounded&quot;}}&lt;/td&gt;
+  &lt;/tr&gt;&lt;tr&gt;
+    &lt;th&gt;Avg&lt;/th&gt;
+    &lt;td&gt;&#123;{view EP.QVV valueBinding=&quot;view.quote.average&quot;}}&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
   &quot;&quot;&quot;
   </code></pre>
 </section>
@@ -28,15 +26,18 @@ EP.QuoteTileView = Ember.View.extend
 <section>
   <h2>Composing Components</h2>
   <h3>Quote Cards</h3>
+  <pre><code>
+EP.QuoteTilesView = Ember.CollectionView.extend
+  classNames: &apos;row&apos;
+  itemViewClass: Ember.View.extend
+    classNames: &apos;span3&apos;
+    template: Ember.Handlebars.compile &quot;&quot;&quot;
+      &#123;{view EP.QuoteTileView quoteBinding=&quot;view.content&quot;}}
+    &quot;&quot;&quot;
+  </code></pre>
   <pre><code class='html'>
 &lt;div class=&quot;container&quot;&gt;
-  &lt;div class=&quot;row&quot;&gt;
-    &#123;{#each quote in EP.watchlist.quotes}}
-      &lt;div class=&quot;span3&quot;&gt;
-        &#123;{view EP.QuoteTileView quoteBinding=&quot;quote&quot;}}
-      &lt;/div&gt;
-    &#123;{/each}}
-  &lt;/div&gt;
+  &#123;{view EP.QuoteTilesView contentBinding=&quot;EP.watchlist.quotes&quot;}}
 &lt;/div&gt;
   </code></pre>
 </section>
@@ -46,11 +47,7 @@ EP.QuoteTileView = Ember.View.extend
   <h3>Quote Cards</h3>
   <p>
   <div class="container">
-    <div class="row">
-      {{#each quote in EP.watchlist.quotes}}
-        <div class="span3">{{view EP.QuoteTileView quoteBinding="quote"}}</div>
-      {{/each}}
-    </div>
+    {{view EP.QuoteTilesView contentBinding="EP.watchlist.quotes"}}
   </div>
   <br/>
   <button class="btn btn-large" {{action indexUpdateQuotes}}>Update Quotes</button>
